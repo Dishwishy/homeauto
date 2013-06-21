@@ -24,7 +24,7 @@ GPIO.setup(thePin, GPIO.OUT)
 # a detailed overview of how to grab this information is available
 # at http://rayshobby.net/?p=2427
 # also...some dismantling was required of the transmitter as there is
-# a small spst switche that lets you set 3 of the pins high or low
+# a small spst switch that lets you set 3 of the pins high or low
 # and thus changes your on/off commands
 
 cmdON = [0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,0,1,0]
