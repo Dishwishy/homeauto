@@ -1,0 +1,56 @@
+//RF codes for RF wireless outlets from amazon
+//similar to these: http://www.amazon.com/Etekcity%C2%AE-Wireless-Controlled-Electrical-Included/dp/B0087DAW46/ref=sr_1_2?ie=UTF8&qid=1377965136&sr=8-2&keywords=wireless+outlet
+
+uint32_t _CMD_1 = 0b1111111101010101110000010; 
+uint32_t _CMD_2 = 0b1111111101010101001100010;
+uint32_t _CMD_3 = 0b1111111101010101000011010;
+uint32_t _CMD_4 = 0b1111111101010101111111010;
+
+
+//Belkin RF switch
+//similar to this: http://www.amazon.com/Belkin-Conserve-Switch-Energy-Saving-Protector/dp/B003P2UMNK/ref=sr_1_17?ie=UTF8&qid=1377965373&sr=8-17&keywords=belkin+wireless+outlet
+
+//ON CODE
+uint32_t _CMD_2 = 0b0100000101010101001100010;
+//OFF CODE
+uint32_t _CMD_3 = 0b0100000101010101110011100;
+
+//RF transmitter fire function this is for the pt2262 RF encoder - written for arduino
+
+static void pt2262Send(uint32_t command) {
+  	byte ix, kx;
+  
+        Serial.println(command, BIN);
+        Serial.println();
+  	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  	// Send the series 16 times
+  	//
+  	for(byte kx = 0; kx < 16; kx++) 
+        {
+      	    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            // Send 16 bits for the Control/Signature sequence
+            // Send  8 bits for the Command sequence
+            // Send  1 bit for the trailing zero
+            // Send a total of 25 bits
+            //
+    	    for(ix = 7; ix < 32; ix++) 
+            {
+  		// If the bit is on, send a '1'
+    	        digitalWrite(sendPin, HIGH);
+	        delayMicroseconds(160+((command >> (31 - ix) & 0x01)*2*160));
+	        digitalWrite(sendPin, LOW);
+	        delayMicroseconds(160+(!(command >> (31 - ix) & 0x01)*2*160));
+            }
+
+    	    // short delay
+    	    delay(5);
+  	}  // End Outer FOR loop
+  
+        for(ix = 7; ix < 32; ix++) {
+              Serial.print("HIGH for ");
+              Serial.print(160+((command >> (31 - ix) & 0x01)*2*160));
+              Serial.print("us - LOW for ");
+              Serial.print(160+(!(command >> (31 - ix) & 0x01)*2*160));
+              Serial.println("us");
+        }
+}
