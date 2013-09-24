@@ -24,6 +24,10 @@ args = parser.parse_args()
 cmdON = [0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,0,1,0]
 cmdOFF = [0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,1,1,1,0,0,1,1,1,0,0]
 
+#functions to open the gpio "value" file and write
+#the on/off values. The RF transmitters are not currently too
+#timing sensitive, so this has been working
+
 def writeOn():
     f = open('/sys/class/gpio/gpio17_pg9/value', 'w+')
     f.write('1')
