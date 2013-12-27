@@ -1,0 +1,6 @@
+<Response>
+  <Pause length='1'/>
+  <Play loop='1'>tone_stream://%(1000,250,852,1477)</Play>
+  <Pause length='1'/>
+  <Hangup></Hangup>
+</Response>
